@@ -1,0 +1,29 @@
+.fa-instagram {
+    color: #ededed;
+    transition: .3s;
+}
+
+.fa-instagram:hover {
+    transform: scale(1.1);
+    color: #d6249f;
+}
+
+.fa-facebook {
+    color: #ededed;
+    transition: .3s;
+}
+
+.fa-facebook:hover {
+    transform: scale(1.1);
+    color: #1877f2;
+}
+
+.fa-linkedin {
+    color: #ffffff;
+    transition: .3s;
+}
+
+.fa-linkedin:hover {
+    transform: scale(1.1);
+    color: #0a66c2;
+}
