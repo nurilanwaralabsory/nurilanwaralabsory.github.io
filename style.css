@@ -1,3 +1,8 @@
+body {
+    overflow-x: hidden;
+    width: 100vw;
+}
+
 .fa-instagram {
     color: #ededed;
     transition: .3s;
