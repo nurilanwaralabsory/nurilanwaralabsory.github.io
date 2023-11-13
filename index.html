@@ -166,20 +166,28 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-11 col-md-6">
-                <form>
+                <div class="alert alert-info alert-dismissible fade show d-none my-alert" role="alert">
+                    <strong>Terimakasih!</strong> Pesan Anda telah kami terima.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <form name="submit-to-google-sheet">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama lengkap</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name" name="nama">
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Password</label>
-                        <input type="email" class="form-control" id="email">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email">
                     </div>
                     <div class="mb-3">
                         <label for="pesan" class="form-label">Pesan</label>
-                        <textarea class="form-control" id="pesan" rows="3"></textarea>
+                        <textarea class="form-control" id="pesan" rows="3" name="pesan"></textarea>
                     </div>
-                    <button type="submit" class="btn" style="background-color: #1dcece;">Kirim</button>
+                    <button type="submit" class="btn btn-kirim" style="background-color: #1dcece;">Kirim</button>
+
+                    <div class="spinner-border text-info btn-loading d-none" role="status">
+                        <span class="visually-hidden"></span>
+                    </div>
                 </form>
             </div>
         </div>
@@ -212,6 +220,36 @@
         AOS.init();
     </script>
     <script src="https://kit.fontawesome.com/e8a2d6ee96.js" crossorigin="anonymous"></script>
+
+    <!-- Script contact form -->
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzZz3-9SYAG8GWuUSYdUYW3tcXbkKA-CT4yFdIQMnfuJWSNzIeiW33Zekvnv-Ad7e1-/exec'
+        const form = document.forms['submit-to-google-sheet'];
+        const btnKirim = document.querySelector(".btn-kirim");
+        const btnLoading = document.querySelector(".btn-loading");
+        const myAlert = document.querySelector(".my-alert");
+
+        // ketika tombol submit ditekan
+        // tampilkan tombol loading & hilangkan tombol kirim
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            btnKirim.classList.toggle("d-none");
+            btnLoading.classList.toggle("d-none");
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    // ketika berhasil tampilkan tombol kirim & hilangkan tombol loading
+                    btnKirim.classList.toggle("d-none");
+                    btnLoading.classList.toggle("d-none");
+                    // munculkan alert setelah pesan terkirim
+                    myAlert.classList.toggle("d-none");
+                    // reset form
+                    form.reset();
+                    console.log('Success!', response)
+                })
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
 </body>
 
 </html>
